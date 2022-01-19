@@ -1,0 +1,4 @@
+#file
+*.env
+*.pem
+node_modules
