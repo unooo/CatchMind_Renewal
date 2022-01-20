@@ -65,9 +65,6 @@ app.use(function (req  , res  , next ) {
   console.log(req.url);
   res.status(404).send('Sorry cant find that!');
 });
-
-app.use(function (err , req , res  , next )  {
-  console.error(err.stack)
-  res.status(500).send('Something broke!')
-});
+let errorHandler = require('./exception/ErrorHandler');
+app.use(errorHandler);
 

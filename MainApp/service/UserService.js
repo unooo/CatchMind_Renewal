@@ -1,26 +1,21 @@
+const wrap = require('../lib/wrap');
 const bcrypt = require('bcrypt');
 const saltRounds = 10; //일종의 노이즈
-let User = require('../repository/user');
-exports.createUser = async function (id, pwd, pwd_confirm, displayName) {
-    let checkDuplicateId = await User.findOne({ id });
-    console.log('checkDuplicateId ', checkDuplicateId)
+let UserRepository = require('../repository/user');
+let IdDuplicateError = require('../exception/IdDuplicateError');
+let PwConfirmDiffError = require('../exception/PwConfirmDiffError');
+exports.createUser = async function ({id, pwd, pwd_confirm, displayName}) {
+    let checkDuplicateId = await UserRepository.findOne({ id });
     if (checkDuplicateId) {
-        return {
-            status: false,
-            message: "ID_duplicated"
-        };
+        throw new IdDuplicateError("ID_duplicated");
     }
-
     if (pwd !== pwd_confirm) {
-        return {
-            status: false,
-            message: "password_must_same"
-        };
+        throw new PwConfirmDiffError("password_must_same");       
     }
     return await new Promise((resolve, reject) => {
         bcrypt.hash(pwd, saltRounds, async function (err, hash) {
             try {
-                let user = await User.create({
+                let user = await UserRepository.create({
                     id,
                     password: hash,
                     name: displayName,
@@ -35,4 +30,4 @@ exports.createUser = async function (id, pwd, pwd_confirm, displayName) {
         });
     })
 
-};
+} ;
