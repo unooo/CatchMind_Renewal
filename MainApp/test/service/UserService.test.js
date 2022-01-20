@@ -1,8 +1,8 @@
 let UserRepository = require('../../repository/user');
 let UserService = require('../../service/UserService');
 let UserDTO_Create = require('../../dto/UserDTO_Create');
-let IdDuplicateError = require('../../exception/IdDuplicateError');
-let PwConfirmDiffError = require('../../exception/PwConfirmDiffError');
+let IdDuplicateError = require('../../exception/DuplicateIDError');
+let PwConfirmDiffError = require('../../exception/DifferentPWConfirmError');
 const bcrypt = require('bcrypt');
 const saltRounds = 10; //일종의 노이즈
 let userDTO_Create;

@@ -1,7 +1,7 @@
 const wrap = require('../lib/wrap');
 let userService = require('../service/UserService');
 let UserDTO_Create = require('../dto/UserDTO_Create');
-let CreateUserError = require('../exception/CreateUserError');
+let CreateUserError = require('../exception/UserError');
 exports.logIn = function (request, response, next) {
     const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
     response.render('login', { ip });

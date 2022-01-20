@@ -1,5 +1,5 @@
 
-let CreateUserError = require('./CreateUserError');
+let CreateUserError = require('./UserError');
 module.exports=function (err , req , res  , next )  {
     console.error(err.stack);
     if(err instanceof CreateUserError  ){

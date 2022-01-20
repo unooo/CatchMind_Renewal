@@ -1,45 +1,38 @@
-let Room = require('../repository/room');
-
+let RoomRepository = require('../repository/room');
+let NotExistRoomIDError = require('../exception/NotExistRoomIDError');
 exports.createRoom = async function ({title, owner, ownerId}) {
-    let ret = await new Room({
+    let ret = await  RoomRepository.create({
         title, owner, ownerId,
-    }).save();
-
+    });
     return ret;
 }
 
 exports.readRoomList = async function () {
-    let rooms = await Room.find({});
+    let rooms = await RoomRepository.find({});
     return rooms;
 };
 
 exports.readRoom = async function (roomId) {
-    let room = await Room.findOne({ _id: roomId });
+    let room = await RoomRepository.findOne({ _id: roomId });
     return room;
 }
 exports.deleteRoom = async function (roomId) {
-    let deleteRoom = await Room.findByIdAndDelete(roomId);
+    let deleteRoom = await RoomRepository.findByIdAndDelete(roomId);
     if (deleteRoom)
         return true;
     else
-        return false;
+        throw new NotExistRoomIDError("delete room fail") ;
 }
 
-exports.increaseRoomNumberByRoomId = async function (roomId,) {
-    let room = await Room.findOne({ _id: roomId });
-    room.attendants_num++;
-    room = await Room.findByIdAndUpdate(roomId, room);
-    if (room)
-        return true;
+exports.changeRoomAttendantsByRoomId = async function (mode,roomId,) {
+    let room = await RoomRepository.findOne({ _id: roomId });
+    if(!room)
+         throw new NotExistRoomIDError("delete room fail") ;
+    if(mode==0)
+        room.attendants_num++;
     else
-        return false;
-};
-exports.decreaseRoomNumberByRoomId = async function (roomId,) {
-    let room = await Room.findOne({ _id: roomId });
-    room.attendants_num--;
-    room = await Room.findByIdAndUpdate(roomId, room);
-    if (room)
-        return true;
-    else
-        return false;
+        room.attendants_num--;
+    
+    await RoomRepository.findByIdAndUpdate(roomId, room);    
+    return true;
 };
