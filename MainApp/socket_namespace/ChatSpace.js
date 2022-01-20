@@ -1,5 +1,5 @@
 let chatService = require('../service/ChatService');
-
+let ChatDTO_Create = require('../dto/ChatDTO_Create');
 module.exports = (socket,io)=>{
     const req = socket.request;
     const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
@@ -15,7 +15,7 @@ module.exports = (socket,io)=>{
     socket.broadcast.to(roomId).emit("newJoin", myName, chats);
 
     socket.on('chat', async function (id, message) {
-      await chatService.createChat(roomId,id,message);      
+      await chatService.createChat(new ChatDTO_Create(roomId,id,message));      
       io.to(roomId).emit('chat', id, message);
     });
 

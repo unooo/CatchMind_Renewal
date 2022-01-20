@@ -1,6 +1,7 @@
+const wrap = require('../lib/wrap');
 let chatService = require('../service/ChatService');
 let roomService = require('../service/RoomService');
-exports.getRoom= async function (request, response) {
+exports.getRoom= wrap(async function (request, response) {
     if(!request.isAuthenticated()){
         response.redirect('/?ret=Please_Login');
     }// 클라이언트단에서 막아두긴했으나 일단처리해둠
@@ -9,7 +10,7 @@ exports.getRoom= async function (request, response) {
     let chats = await chatService.readChatByRoomId(rId);
     roomService.increaseRoomNumberByRoomId(rId);
     response.render('conference.ejs', { rId, chats, myId });
-};
+});
 
 exports.exitRoom = async function(request,response){
     if(!request.isAuthenticated()){

@@ -1,9 +1,11 @@
 let Room = require('../repository/room');
 
-exports.createRoom = async function (title, owner, ownerId) {
-    await new Room({
+exports.createRoom = async function ({title, owner, ownerId}) {
+    let ret = await new Room({
         title, owner, ownerId,
     }).save();
+
+    return ret;
 }
 
 exports.readRoomList = async function () {
