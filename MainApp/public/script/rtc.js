@@ -1,3 +1,4 @@
+
 const App = (localVideo, videoGrid, connectionStateSpan) => {
     const pc_config_stun = {
         "iceServers": [
@@ -27,8 +28,12 @@ const App = (localVideo, videoGrid, connectionStateSpan) => {
     let offers = [];
     let answers = [];
     let remoteVideos = [];
-    let socket = io.connect('https://www.unoo.kro.kr:3001', { path: '/socket.io', transports: ['websocket'] });
-
+    
+    let socket = io.connect('https://www.unoo.kro.kr:3001', { path: "/socket.io", transports: ["websocket","polling"], });
+    //let socket = io('https://www.unoo.kro.kr:3001', { path: '/socket.io', transports: ['websocket'] });
+    socket.on('error', (error) => {
+        alert(error);
+      });
     socket.on('connect', () => {
         connectionStateSpan.innerText = "접속중";
     });

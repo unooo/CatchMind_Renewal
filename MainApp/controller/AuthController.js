@@ -1,6 +1,7 @@
 const wrap = require('../lib/wrap');
 let userService = require('../service/UserService');
-
+let UserDTO_Create = require('../dto/UserDTO_Create');
+let CreateUserError = require('../exception/CreateUserError');
 exports.logIn = function (request, response, next) {
     const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
     response.render('login', { ip });
@@ -36,17 +37,14 @@ exports.get_register = function (request, response) {
     response.render('register', { ip });
 };
 exports.post_register = wrap(async function (request, response) {
-    var post = request.body;
-    var id = post.id;
-    var pwd = post.pwd;
-    var pwd_confirm = post.pwd2;
-    var displayName = post.displayName;
-    let ret = await userService.createUser(id,pwd,pwd_confirm,displayName);
+    let post = request.body;
+    let userDto = new UserDTO_Create(post.id,post.pwd,post.pwd2,post.displayName);    
+    let ret = await userService.createUser(userDto);
     if(ret.status){
         request.login(ret.user, function (err) {
             response.redirect('/');    
         });        
     }else{
-        response.redirect('/auth/register?ret='+ret.message);
+       throw new CreateUserError();
     }
 })

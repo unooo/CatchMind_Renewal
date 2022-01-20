@@ -1,3 +1,4 @@
+
 const socketIo = require('socket.io');
 let passportSocketIo = require("passport.socketio");
 
@@ -30,9 +31,9 @@ module.exports = (server, app, sessionStore, cookieParser) => {
   }
 
   function onAuthorizeFail(data, message, error, accept) {
-    if (error)
-      throw new Error(message);
     console.log('failed connection to socket.io:', message);
+    if (error)
+      throw new Error(message);   
     // We use this callback to log all of our failed connections.
     accept(null, false);
   }
