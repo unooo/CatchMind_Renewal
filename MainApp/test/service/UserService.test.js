@@ -8,18 +8,21 @@ const saltRounds = 10; //일종의 노이즈
 let userDTO_Create;
 UserRepository.create = jest.fn();
 UserRepository.findOne = jest.fn();
-let hash, userObj;
+let user;
 describe("UserService Create", () => {
-    beforeEach(() => {
-        userDTO_Create = new UserDTO_Create("bunge24", 1234, 1234, "윤현우");
-        userObj = {
-            id: userDTO_Create.id,
-            password: hash,
-            name: userDTO_Create.displayName
-        };
-        bcrypt.hash(userDTO_Create.pwd, saltRounds, async function (err, hashRet) {
-            hash = hashRet;
+    beforeAll((done)=>{
+        userDTO_Create = new UserDTO_Create("bunge24", 1234, 1234, "윤현우");  
+        bcrypt.hash(userDTO_Create.pwd, saltRounds, function (err, hashRet) {
+            user = {
+                id: userDTO_Create.id,
+                password: hashRet,
+                name: userDTO_Create.displayName
+            };
+            done();
         });
+    })
+    beforeEach(() => {
+        userDTO_Create = new UserDTO_Create("bunge24", 1234, 1234, "윤현우");             
     });
 
     it("should call UserRepository.findOne_success", async () => {
@@ -46,7 +49,7 @@ describe("UserService Create", () => {
 
     it("should call UserRepository.create_success", async () => {
         await UserService.createUser(userDTO_Create);
-        expect(UserRepository.create).toBeCalledWith(userObj);
+        expect(UserRepository.create).toBeCalledWith(user);
     });
 
     it("should call UserRepository.create_fail", async () => {
@@ -55,9 +58,11 @@ describe("UserService Create", () => {
     });
 
     it("return test with promise resolve", () => {
+        UserRepository.create=jest.fn();
+        UserRepository.create.mockImplementation(()=>user);
         expect(UserService.createUser(userDTO_Create)).resolves.toEqual({
             status: true,
-            userObj
+            user,
         })
     })
 

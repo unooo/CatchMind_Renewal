@@ -1,4 +1,3 @@
-const wrap = require('../lib/wrap');
 const bcrypt = require('bcrypt');
 const saltRounds = 10; //일종의 노이즈
 let UserRepository = require('../repository/user');
