@@ -2,7 +2,7 @@ const wrap = require('../lib/wrap');
 let userService = require('../service/UserService');
 let UserDTO_Create = require('../dto/UserDTO_Create');
 let CreateUserError = require('../exception/UserError');
-let LoginError = require('../exception/LoginError');
+let PassportLoginError = require('../exception/PassportLoginError');
 
 exports.get_register =wrap(async function (request, response) {
     const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
@@ -34,8 +34,8 @@ exports.logIn_process = wrap(async function (req, res, next, passport) {
             return next(err);
         }
         if (!userInfo) {
-            console.log('loginError', info.message);
-            return next(new LoginError(info.message));// return 아닌 throw시 오작동
+            console.log('PassportLoginError', info.message);
+            return next(new PassportLoginError(info.message));// return 아닌 throw시 오작동
         }
         return req.logIn(userInfo, function (err) { //여기서 userlove 는  serializeuser의 userlove로 넘겨준다
             console.log('start log in');

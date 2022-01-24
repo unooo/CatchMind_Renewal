@@ -4,8 +4,9 @@ let RoomError = require('./RoomError');
 let AuthenticateError = require('./AuthenticateError');
 module.exports= async function (error , req , res  , next )  {  
     console.error(error.stack);    
-    if(error instanceof UserError){
-        //res.redirect('/auth/register?ret='+err.name+":"+err.message);        
+    if(error instanceof AuthenticateError){
+        res.redirect('/auth/login');    
+    }else if(error instanceof UserError){            
         res.status(500).send({
             status:false,
             error:{

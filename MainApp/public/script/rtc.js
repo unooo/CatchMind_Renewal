@@ -1,5 +1,5 @@
 
-const App = (localVideo, videoGrid, connectionStateSpan) => {
+const App = (localVideo, videoGrid,videoGridRight, connectionStateSpan) => {
     const pc_config_stun = {
         "iceServers": [
             {
@@ -277,7 +277,7 @@ const App = (localVideo, videoGrid, connectionStateSpan) => {
         if (delVideoFlag)
             removeVideo(socketID);
     }
-
+    let videoDirFlag=false;
     function makeOtherVideo(socketID, email) {
         /*Set Video Outer*/
         let divOuter = document.createElement('div');
@@ -301,7 +301,10 @@ const App = (localVideo, videoGrid, connectionStateSpan) => {
         /*Append Element*/
         divOuter.append(video);
         divOuter.append(idTag);
+        if(videoDirFlag)
         videoGrid.append(divOuter);
+        else
+        videoGridRight.append(divOuter);
 
     }
     function removeVideo(socketID) {

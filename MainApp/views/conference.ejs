@@ -27,7 +27,7 @@
     var myId = '<%=myId%>';
     var canvas, context;
     let localVideo;
-    let videoGrid;
+    let videoGrid,videoGridRight;
     let connectionStateSpan;
     let MyRTCData;
     window.onload = function () {
@@ -182,8 +182,9 @@
             disconnectMyConnection();
             localVideo = document.getElementById('localVideo');
             videoGrid = document.getElementById('video-grid');
+            videoGridRight = document.getElementById('video-grid-Right');
             connectionStateSpan = document.getElementById('connectionStateSpan');
-            MyRTCData = App(localVideo,videoGrid ,connectionStateSpan);            
+            MyRTCData = App(localVideo,videoGrid,videoGridRight ,connectionStateSpan);            
         }
         function removeVideoAll() {
             MyRTCData.remoteVideos.forEach(delVideo => {

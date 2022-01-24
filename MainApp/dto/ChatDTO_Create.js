@@ -1,8 +1,8 @@
 module.exports=class{
     roomId; userId; chat;
-    constructor(roomId,userId,chat){
-        this.roomId=roomId,
-        this.userId=userId,
+    constructor(room,user,chat){
+        this.room=room,
+        this.user=user,
         this.chat=chat;
     }
 }

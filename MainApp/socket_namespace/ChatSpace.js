@@ -15,6 +15,7 @@ module.exports = (socket,io)=>{
     socket.broadcast.to(roomId).emit("newJoin", myName, chats);
 
     socket.on('chat', async function (id, message) {
+      console.log(roomId,id,message);
       await chatService.createChat(new ChatDTO_Create(roomId,id,message));      
       io.to(roomId).emit('chat', id, message);
     });

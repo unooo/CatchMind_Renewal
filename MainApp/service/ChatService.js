@@ -1,7 +1,7 @@
 let ChatRepository = require('../repository/chat');
 
-exports.createChat = async function({roomId,userId,chat}){
-    let chatModel = await ChatRepository.create({roomId,userId,chat});
+exports.createChat = async function({room,user,chat}){
+    let chatModel = await ChatRepository.create({room,user,chat});
     return chatModel;
 }
 

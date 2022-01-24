@@ -1,5 +1,4 @@
-let UserError = require('./UserError');
-module.exports=class extends UserError{
+module.exports=class extends Error {
     constructor(message) {
         super(message);
         this.name = this.constructor.name;
