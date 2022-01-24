@@ -13,13 +13,17 @@ let options = {
 
 //Server 연결
 const server = https.Server(options, app);
-server.listen(443, function () {
-  console.log('success https');
-});
+if (process.env.NODE_ENV !== 'test') { //supertest중 listen 할 필요가 없으므로
+  server.listen(443, function () {
+    console.log('success https');
+  });
+}
+
 //MongoDB 연결
 const mongoose = require('mongoose');
 const connect = require('./lib/db.js');
-connect();
+(async ()=>{ await connect();})();
+
 
 
 app.set('view engine', 'ejs');
@@ -68,3 +72,4 @@ app.use(function (req  , res  , next ) {
 let errorHandler = require('./exception/ErrorHandler');
 app.use(errorHandler);
 
+module.exports = app;

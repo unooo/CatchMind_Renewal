@@ -36,20 +36,9 @@
       {
         "type": "node",
         "request": "attach",
-        "name": "pm2 debugger1",
+        "name": "pm2 debugger",
         "processId": "${command:PickProcess}",      
-      },
-      {
-        "type": "node",
-        "request": "attach",
-        "name": "pm2 debugger2",
-        "processId": "${command:PickProcess}",      
-      }
+        "port":5858
+      },   
     ],
-    "compounds": [
-        {
-          "name": "Debug Electron",
-          "configurations": ["pm2 debugger1", "pm2 debugger2"]
-        }
-      ]
   }

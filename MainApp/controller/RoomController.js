@@ -13,16 +13,16 @@ exports.getRoom= wrap(async function (request, response) {
     response.render('conference.ejs', { rId, chats, myId });
 });
 
-exports.exitRoom = async function(request,response){
+exports.exitRoom = wrap(async function(request,response){
     if(!request.isAuthenticated()){
         response.redirect('/?ret=Please_Login');
     }// 클라이언트단에서 막아두긴했으나 일단처리해둠    
     let rId = request.params.roomId;
     roomService.changeRoomAttendantsByRoomId(1,rId);
     response.send({status:"ok"});
-}
+});
 
-exports.createRoom= async function (request, response) {
+exports.createRoom= wrap(async function (request, response) {
     if (!request.isAuthenticated()) {
         response.send({
             status: false,
@@ -37,9 +37,9 @@ exports.createRoom= async function (request, response) {
         status: true,
         rooms
     });
-};
+});
 
-exports.deleteRoom=async function (request, response) {
+exports.deleteRoom=wrap(async function (request, response) {
 
     if (!request.isAuthenticated()) {
         response.send({
@@ -72,4 +72,4 @@ exports.deleteRoom=async function (request, response) {
         status: true,
         rooms,
     });
-};
+});

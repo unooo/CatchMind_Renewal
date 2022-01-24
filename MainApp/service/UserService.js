@@ -3,6 +3,7 @@ const saltRounds = 10; //일종의 노이즈
 let UserRepository = require('../repository/user');
 let IdDuplicateError = require('../exception/DuplicateIDError');
 let PwConfirmDiffError = require('../exception/DifferentPWConfirmError');
+
 exports.createUser = async function ({id, pwd, pwd_confirm, displayName}) {
     let checkDuplicateId = await UserRepository.findOne({ id });
     if (checkDuplicateId) {
