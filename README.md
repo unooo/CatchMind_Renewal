@@ -90,3 +90,7 @@ exports.post_register = wrap(async function (request, response) {
 ```
 ### 5. Jest, Supertest를 이용한 유닛, 통합테스트 구현
 CatchMind_Renewal/MainApp/test/
+
+## 실행화면
+![image](https://user-images.githubusercontent.com/30948477/150801810-8c89e8b9-a25a-4d62-a877-a2f9ad390de8.png)
+
