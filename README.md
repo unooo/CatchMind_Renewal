@@ -57,6 +57,9 @@ module.exports= async function (error , req , res  , next )  {
 ### 3. Transaction 기능 추가
 and
 ### 4. ExpressJS의 전역 Error Handler 사용을 위한 Async 함수의 Wrapper 함수 구현 - 데코레이터 패턴 적용 
+#### 적용 이유:
+https://changjoopark.medium.com/express-%EB%9D%BC%EC%9A%B0%ED%8A%B8%EC%97%90%EC%84%9C-async-await%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%98%EB%A0%A4%EB%A9%B4-7e8ffe0fcc84
+
 CatchMind_Renewal/MainApp/lib/wrap.js /
 ```
 const { startSession } = require('mongoose');
